@@ -68,26 +68,13 @@ for l in range(0, iterations):
     logl_i[l] = np.sum(prob_i)
     logl_c[l] = np.sum(prob_c)
     if logl_c[l] < logl_i[l]:
-        switch = st.bernoulli(logl_c[l]/logl_i[l])
+        switch = st.bernoulli(np.exp(logl_c[l]-logl_i[l]))
         if switch == 1:
             lam = cand
         else:
             cand = cand
     else:
         lam = cand
-
-#and plot results
-
-logl_i = max(logl_i)/logl_i
-plt.plot(logl_i)
-plt.xlabel("Number of iterations")
-plt.ylabel("Scaled likelihood")
-plt.show()
-
-plt.plot(lambdas)
-plt.xlabel("Number of iterations")
-plt.ylabel("Lambda")
-plt.show()
 
 print(cand)
 
